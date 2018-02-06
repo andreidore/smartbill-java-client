@@ -1,4 +1,4 @@
-package com.sety.smartbillclient;
+package com.github.andreidore.smartbillclient;
 
 public class SmartBillException extends RuntimeException {
 

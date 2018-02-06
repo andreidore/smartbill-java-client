@@ -1,4 +1,4 @@
-package com.sety.smartbillclient;
+package com.github.andreidore.smartbillclient;
 
 import java.math.BigDecimal;
 

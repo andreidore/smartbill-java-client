@@ -1,4 +1,4 @@
-package com.sety.smartbillclient.json;
+package com.github.andreidore.smartbillclient.json;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package com.sety.smartbillclient;
+package com.github.andreidore.smartbillclient;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sety.smartbillclient.SeriesInfo.SeriesType;
-import com.sety.smartbillclient.json.JacksonProcessor;
+import com.github.andreidore.smartbillclient.SeriesInfo.SeriesType;
+import com.github.andreidore.smartbillclient.json.JacksonProcessor;
 
 import net.dongliu.requests.RawResponse;
 import net.dongliu.requests.Requests;

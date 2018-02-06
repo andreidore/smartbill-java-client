@@ -6,7 +6,7 @@
     <url>http://github.com/andreidore/smartbill-java-client</url>
     <description>A Smartbill API client for Java</description>  
 
-    <groupId>com.sety</groupId>
+    <groupId>com.github.andreidore</groupId>
     <artifactId>smartbillclient</artifactId>
     <version>0.1.0</version>
 
