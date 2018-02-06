@@ -2,6 +2,9 @@
 
 # Under development #
 
+[SmartBill API](http://api.smartbill.ro/) client for java
+
+
 ## Todo ##
 
 * Invoice
