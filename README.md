@@ -5,8 +5,9 @@ Table of Contents
 
 * [Maven](#maven)
 * [Usage](#usage)
+  * [Client](#client)
   * [Configuration](#configuration)
-* [Todo] (#todo)
+* [Todo](#todo)
 
 # Maven #
 
@@ -21,8 +22,12 @@ SmartBill client is now in maven central repo.
 ```
 # Usage
 
+## Client
+Client
+
+
 ## Configuration
-fdfdfdfd
+Configuration
 
 # Todo
 
