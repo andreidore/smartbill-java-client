@@ -1,11 +1,35 @@
-# smartbill-java-client
-
-# Under development #
-
 [SmartBill API](http://api.smartbill.ro/) client for java
 
+Table of Contents
+=================
 
-## Todo ##
+* [Maven](#maven)
+* [Usage](#usage)
+  * [Client](#client)
+  * [Configuration](#configuration)
+* [Todo](#todo)
+
+# Maven #
+
+SmartBill client is now in maven central repo.
+
+```xml
+<dependency>
+    <groupId>com.github.andreidore</groupId>
+    <artifactId>smartbillclient</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+# Usage
+
+## Client
+Client
+
+
+## Configuration
+Configuration
+
+# Todo
 
 * Invoice
   * CreateInvoice
