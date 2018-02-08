@@ -55,6 +55,13 @@ public class SmartBillClient {
 
     private void handleError400(RawResponse response) {
 
+	Map<String, Object> responseMap = response.readToJson(Map.class);
+	
+	String errorText = (String) responseMap.get("errorText");
+	
+	throw new SmartBillException(errorText);
+	
+	
     }
 
     public void sendEmail(String cif, String seriesName, String number, DocumentType type) {
