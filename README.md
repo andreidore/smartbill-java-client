@@ -6,6 +6,7 @@ Table of Contents
 * [Maven](#maven)
 * [Usage](#usage)
   * [Client](#client)
+  * [Email](#email)
   * [Configuration](#configuration)
 * [Todo](#todo)
 
@@ -23,8 +24,19 @@ SmartBill client is now in maven central repo.
 # Usage
 
 ## Client
-Client
+Create client
 
+```java
+SmartBillClient client = new SmartBillClient("username", "token");
+
+// or
+SmartBillClient client = new SmartBillClient("username", "token","url");
+```
+
+You cand find more info about authentication data [here](http://api.smartbill.ro/#!/Autentificare).
+
+
+## Email
 
 ## Configuration
 Configuration
@@ -52,8 +64,8 @@ Configuration
   * CancelEstimate
   * RestoreEstimate
 
-* Email
-  * SendDocument
+* ~~Email~~
+  * ~~SendDocument~~
 
 * ~~Configuration~~
   * ~~GetTaxes~~
