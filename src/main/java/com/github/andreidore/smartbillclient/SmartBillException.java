@@ -2,10 +2,23 @@ package com.github.andreidore.smartbillclient;
 
 import net.dongliu.requests.RawResponse;
 
+/**
+ * 
+ * Thrown when status code is not 2xx 
+ *
+ * @author Andrei Dore
+ *
+ */
 public class SmartBillException extends RuntimeException {
 
+    /**
+     * operation code. Sometimes SmartBill return an error code.
+     */
     private int code = -1;
 
+    /**
+     * http code return by SmartBill.
+     */
     private int httpCode = -1;
 
     /**
@@ -23,14 +36,30 @@ public class SmartBillException extends RuntimeException {
 	this.code = code;
     }
 
+    /**
+     * Return operation error code. Sometimes SmartBill return an error code.
+     * 
+     * @return error code
+     */
     public int getCode() {
 	return code;
     }
 
+    /**
+     * Return http code.
+     * 
+     * @return http code
+     */
     public int getHttpCode() {
 	return httpCode;
     }
 
+    /**
+     * Generate exception from http response.
+     * 
+     * @param rawResponse 
+     * @return
+     */
     public static SmartBillException createFromResponse(RawResponse rawResponse) {
 
 	StringBuilder errorText = new StringBuilder();
