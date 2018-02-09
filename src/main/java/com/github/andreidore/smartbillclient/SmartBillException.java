@@ -1,10 +1,12 @@
 package com.github.andreidore.smartbillclient;
 
+import java.util.Map;
+
 import net.dongliu.requests.RawResponse;
 
 /**
  * 
- * Thrown when status code is not 2xx 
+ * Thrown when status code is not 2xx
  *
  * @author Andrei Dore
  *
@@ -57,7 +59,7 @@ public class SmartBillException extends RuntimeException {
     /**
      * Generate exception from http response.
      * 
-     * @param rawResponse 
+     * @param rawResponse
      * @return
      */
     public static SmartBillException createFromResponse(RawResponse rawResponse) {
@@ -68,15 +70,31 @@ public class SmartBillException extends RuntimeException {
 
 	errorText.append("HTTP code:");
 	errorText.append(statusCode);
-	errorText.append(".");
+	errorText.append(". ");
 
 	errorText.append("URL:");
 	errorText.append(rawResponse.getURL());
-	errorText.append(".");
+	errorText.append(". ");
 
 	switch (statusCode) {
 
 	case 400:
+
+	    Map<String, Object> responseMap = null;
+	    try {
+		responseMap = rawResponse.readToJson(Map.class);
+	    } catch (Exception e) {
+		// ignore if the response is not json
+	    }
+
+	    if (responseMap != null && responseMap.containsKey("errorText")) {
+		String errorMessage = (String) responseMap.get("errorText");
+
+		errorText.append(errorMessage);
+		errorText.append(". ");
+
+	    }
+
 	    errorText.append(
 		    "Datele din request nu au fost completate corect sau sunt incomplete sau actiunea nu este permisa pentru datele furnizate. Pentru mai multe detalii si sugestii, va rugam sa urmariti mesajele de eroare returnate in raspuns.");
 	    break;
