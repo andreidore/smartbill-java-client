@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,17 +52,6 @@ public class SmartBillClient {
 	JsonProcessor jsonProcessor = new JacksonProcessor();
 	JsonLookup.getInstance().register(jsonProcessor);
 
-    }
-
-    private void handleError400(RawResponse response) {
-
-	Map<String, Object> responseMap = response.readToJson(Map.class);
-	
-	String errorText = (String) responseMap.get("errorText");
-	
-	throw new SmartBillException(errorText);
-	
-	
     }
 
     public void sendEmail(String cif, String seriesName, String number, DocumentType type) {
@@ -121,11 +111,15 @@ public class SmartBillClient {
 
 	String taxesUrl = url + "/SBORO/api/tax";
 
+	Map<String, Object> headers = new HashMap<>();
+	headers.put("Accept", "application/json");
+	headers.put("Content-Type", "application/json");
+
 	Map<String, Object> params = new HashMap<>();
 	params.put("cif", cif);
 
-	RawResponse response = Requests.get(taxesUrl).basicAuth(username, token).requestCharset(StandardCharsets.UTF_8)
-		.params(params).send();
+	RawResponse response = Requests.get(taxesUrl).headers(headers).basicAuth(username, token)
+		.requestCharset(StandardCharsets.UTF_8).params(params).send();
 
 	if (response.getStatusCode() == 200) {
 
@@ -138,7 +132,13 @@ public class SmartBillClient {
 	    for (Map<String, Object> m : responseList) {
 
 		String name = (String) m.get("name");
-		BigDecimal percentage = (BigDecimal) m.get("percentage");
+		Number per = (Number) m.get("percentage");
+		BigDecimal percentage;
+		if (per instanceof BigDecimal) {
+		    percentage = (BigDecimal) per;
+		} else { // In this case is Long
+		    percentage = new BigDecimal(per.longValue());
+		}
 
 		taxList.add(new Tax(name, percentage));
 
@@ -146,14 +146,9 @@ public class SmartBillClient {
 
 	    return taxList;
 
-	} else if (response.getStatusCode() >= 400 && response.getStatusCode() <= 499) {
-
-	    handleError400(response);
-
 	} else {
 	    throw SmartBillException.createFromResponse(response);
 	}
-	return null;
 
     }
 
@@ -208,18 +203,58 @@ public class SmartBillClient {
 
 	    return seriesList;
 
-	} else if (response.getStatusCode() >= 400 && response.getStatusCode() <= 499) {
-	    handleError400(response);
 	} else {
 	    throw SmartBillException.createFromResponse(response);
 	}
-	return null;
 
     }
 
     public List<SeriesInfo> getSeries(String cif) {
 
 	return getSeries(cif, null);
+    }
+
+    public Stock getStock(String cif, Date date, String warehouseName, String productName, String productCode) {
+
+	String stocksUrl = url + "/SBORO/api/stocks";
+
+	Map<String, Object> params = new HashMap<>();
+	params.put("cif", cif);
+
+	RawResponse response = Requests.get(stocksUrl).basicAuth(username, token).requestCharset(StandardCharsets.UTF_8)
+		.params(params).send();
+
+	if (response.getStatusCode() == 200) {
+
+	    /*
+	     * Map<String, Object> responseMap = response.readToJson(Map.class);
+	     * 
+	     * List<Map<String, Object>> responseList = (List<Map<String,
+	     * Object>>) responseMap.get("list");
+	     * 
+	     * List<SeriesInfo> seriesList = new ArrayList<SeriesInfo>();
+	     * 
+	     * for (Map<String, Object> m : responseList) {
+	     * 
+	     * String name = (String) m.get("name"); long nextNumber = ((Long)
+	     * m.get("nextNumber")).longValue(); String t = (String)
+	     * m.get("type");
+	     * 
+	     * DocumentType typeDocument = null; if (t.equals("f")) {
+	     * typeDocument = DocumentType.INVOICE; } else if (t.equals("p")) {
+	     * typeDocument = DocumentType.PROFORMA; }
+	     * 
+	     * seriesList.add(new SeriesInfo(name, nextNumber, typeDocument));
+	     * 
+	     * }
+	     */
+
+	    return null;
+
+	} else {
+	    throw SmartBillException.createFromResponse(response);
+	}
+
     }
 
 }

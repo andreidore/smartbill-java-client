@@ -57,7 +57,7 @@ public class SmartBillException extends RuntimeException {
     }
 
     /**
-     * Generate exception from http response.
+     * Generate exception from HTTP response.
      * 
      * @param rawResponse
      * @return
