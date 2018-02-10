@@ -33,7 +33,7 @@ SmartBillClient client = new SmartBillClient("username", "token");
 SmartBillClient client = new SmartBillClient("username", "token","url");
 ```
 
-You cand find more info about authentication data [here](http://api.smartbill.ro/#!/Autentificare).
+You can find more info about authentication data [here](http://api.smartbill.ro/#!/Autentificare).
 
 
 ## Email
