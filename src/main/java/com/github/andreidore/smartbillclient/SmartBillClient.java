@@ -1,8 +1,11 @@
 package com.github.andreidore.smartbillclient;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -10,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.andreidore.smartbillclient.Warehouse.Type;
 import com.github.andreidore.smartbillclient.json.JacksonProcessor;
 
 import net.dongliu.requests.RawResponse;
@@ -214,42 +218,139 @@ public class SmartBillClient {
 	return getSeries(cif, null);
     }
 
-    public Stock getStock(String cif, Date date, String warehouseName, String productName, String productCode) {
+    /**
+     * 
+     * Returns all products stock in all warehouses.
+     * 
+     * @param cif
+     *            company cif
+     * @param date
+     *            date
+     * @return list of products stock
+     */
+    public List<Stock> getStock(String cif, Date date) {
+	return getStock(cif, date, null, null, null);
+    }
+
+    /**
+     * Returns all products stock in warehouse
+     * 
+     * @param cif
+     *            company cif
+     * @param date
+     *            date
+     * @param warehouseName
+     *            warehouse name
+     * @return list of products stock
+     */
+    public List<Stock> getStock(String cif, Date date, String warehouseName) {
+	return getStock(cif, date, warehouseName, null, null);
+    }
+
+    /**
+     * Returns products stock
+     * 
+     * @param cif
+     *            conpany cif
+     * @param date
+     *            date
+     * @param warehouseName
+     *            If the parameter is null the method will returns products
+     *            stock for all warehouses.
+     * @param productName
+     *            If the parameter is null the method will returns products
+     *            stock for all products.
+     * @param productCode
+     *            If the parameter is null the method will returns products
+     *            stock for all products.
+     * @return
+     */
+    public List<Stock> getStock(String cif, Date date, String warehouseName, String productName, String productCode) {
 
 	String stocksUrl = url + "/SBORO/api/stocks";
 
 	Map<String, Object> params = new HashMap<>();
 	params.put("cif", cif);
 
+	SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-mm-dd");
+	String dateString = dateFormat.format(date);
+	params.put("date", dateString);
+
+	if (warehouseName != null) {
+	    try {
+		params.put("warehouseName", URLEncoder.encode(warehouseName, StandardCharsets.UTF_8.toString()));
+	    } catch (UnsupportedEncodingException e) {
+
+	    }
+	}
+
+	if (productCode != null) {
+	    try {
+		params.put("productCode", URLEncoder.encode(productCode, StandardCharsets.UTF_8.toString()));
+	    } catch (UnsupportedEncodingException e) {
+
+	    }
+	}
+
+	if (productName != null) {
+	    try {
+		params.put("productName", URLEncoder.encode(productName, StandardCharsets.UTF_8.toString()));
+	    } catch (UnsupportedEncodingException e) {
+
+	    }
+	}
+
 	RawResponse response = Requests.get(stocksUrl).basicAuth(username, token).requestCharset(StandardCharsets.UTF_8)
 		.params(params).send();
 
 	if (response.getStatusCode() == 200) {
 
-	    /*
-	     * Map<String, Object> responseMap = response.readToJson(Map.class);
-	     * 
-	     * List<Map<String, Object>> responseList = (List<Map<String,
-	     * Object>>) responseMap.get("list");
-	     * 
-	     * List<SeriesInfo> seriesList = new ArrayList<SeriesInfo>();
-	     * 
-	     * for (Map<String, Object> m : responseList) {
-	     * 
-	     * String name = (String) m.get("name"); long nextNumber = ((Long)
-	     * m.get("nextNumber")).longValue(); String t = (String)
-	     * m.get("type");
-	     * 
-	     * DocumentType typeDocument = null; if (t.equals("f")) {
-	     * typeDocument = DocumentType.INVOICE; } else if (t.equals("p")) {
-	     * typeDocument = DocumentType.PROFORMA; }
-	     * 
-	     * seriesList.add(new SeriesInfo(name, nextNumber, typeDocument));
-	     * 
-	     * }
-	     */
+	    Map<String, Object> responseMap = response.readToJson(Map.class);
 
-	    return null;
+	    List<Map<String, Object>> responseList = (List<Map<String, Object>>) responseMap.get("list");
+
+	    List<Stock> stocks = new ArrayList<Stock>();
+
+	    for (Map<String, Object> s : responseList) {
+
+		Map<String, Object> w = (Map<String, Object>) s.get("warehouse");
+
+		String wName = (String) w.get("warehouseName");
+		String wType = (String) w.get("warehouseType");
+
+		Warehouse.Type warehouseType = null;
+		if (wType.equals("en gros")) {
+		    warehouseType = Type.EN_GROS;
+		} else if (wType.equals("p")) {
+		    warehouseType = Type.EN_DETAIL;
+		}
+
+		Warehouse warehouse = new Warehouse(wName, warehouseType);
+
+		List<Map<String, Object>> productMapList = (List<Map<String, Object>>) s.get("products");
+
+		List<StockProduct> stockProducts = new ArrayList<StockProduct>();
+
+		for (Map<String, Object> stockProductMap : productMapList) {
+
+		    String pName = (String) stockProductMap.get("productName");
+		    String pMeasuringUnit = (String) stockProductMap.get("measuringUnit");
+		    String pCode = (String) stockProductMap.get("productCode");
+		    BigDecimal pQuantity = (BigDecimal) stockProductMap.get("quantity");
+
+		    StockProduct stockProduct = new StockProduct(pName, pCode, pMeasuringUnit, pQuantity);
+
+		    stockProducts.add(stockProduct);
+
+		}
+
+		Stock stock = new Stock(warehouse, stockProducts);
+
+		stocks.add(stock);
+
+	    }
+
+	    return stocks;
 
 	} else {
 	    throw SmartBillException.createFromResponse(response);
