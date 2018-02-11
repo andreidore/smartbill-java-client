@@ -47,6 +47,8 @@ List<Stock> stocks = client.getStocks("cif",new Date());
 // or
 List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse");
 // or
+List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse","Product 1",null);
+// or
 List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse",null,"CODE_1");
 
 ```
