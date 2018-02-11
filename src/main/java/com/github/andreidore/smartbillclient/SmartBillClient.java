@@ -228,8 +228,8 @@ public class SmartBillClient {
      *            date
      * @return list of products stock
      */
-    public List<Stock> getStock(String cif, Date date) {
-	return getStock(cif, date, null, null, null);
+    public List<Stock> getStocks(String cif, Date date) {
+	return getStocks(cif, date, null, null, null);
     }
 
     /**
@@ -243,8 +243,8 @@ public class SmartBillClient {
      *            warehouse name
      * @return list of products stock
      */
-    public List<Stock> getStock(String cif, Date date, String warehouseName) {
-	return getStock(cif, date, warehouseName, null, null);
+    public List<Stock> getStocks(String cif, Date date, String warehouseName) {
+	return getStocks(cif, date, warehouseName, null, null);
     }
 
     /**
@@ -265,7 +265,7 @@ public class SmartBillClient {
      *            stock for all products.
      * @return
      */
-    public List<Stock> getStock(String cif, Date date, String warehouseName, String productName, String productCode) {
+    public List<Stock> getStocks(String cif, Date date, String warehouseName, String productName, String productCode) {
 
 	String stocksUrl = url + "/SBORO/api/stocks";
 
