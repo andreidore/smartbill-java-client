@@ -8,6 +8,7 @@ Table of Contents
   * [Client](#client)
   * [Email](#email)
   * [Configuration](#configuration)
+  * [Stock](#stock)
 * [Todo](#todo)
 
 # Maven #
@@ -28,7 +29,6 @@ Create client
 
 ```java
 SmartBillClient client = new SmartBillClient("username", "token");
-
 // or
 SmartBillClient client = new SmartBillClient("username", "token","url");
 ```
@@ -40,6 +40,17 @@ You can find more info about authentication data [here](http://api.smartbill.ro/
 
 ## Configuration
 Configuration
+
+## Stock
+```java
+List<Stock> stocks = client.getStocks("cif",new Date());
+// or
+List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse");
+// or
+List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse",null,"CODE_1");
+
+```
+
 
 # Todo
 
@@ -71,7 +82,7 @@ Configuration
   * ~~GetTaxes~~
   * ~~GetSeries~~
 
-* Stock
-  * GetStock
+* ~~Stock~~
+  * ~~GetStock~~
 
 
