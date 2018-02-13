@@ -6,6 +6,8 @@ Table of Contents
 * [Maven](#maven)
 * [Usage](#usage)
   * [Client](#client)
+  * [Invoice](#invoice)
+     * [Download](#download) 
   * [Email](#email)
   * [Configuration](#configuration)
   * [Stock](#stock)
@@ -35,6 +37,15 @@ SmartBillClient client = new SmartBillClient("username", "token","url");
 
 You can find more info about authentication data [here](http://api.smartbill.ro/#!/Autentificare).
 
+## Invoice
+
+### Download 
+
+```java
+byte[] data = client.getInvoicePdf("cif","0","1")
+
+```
+
 
 ## Email
 
@@ -58,7 +69,7 @@ List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse",null,"CODE_1"
 
 * Invoice
   * CreateInvoice
-  * GetInvoicePdf
+  * ~~GetInvoicePdf~~
   * DeleteInvoice
   * CancelInvoice
   * RestoreInvoice
