@@ -77,7 +77,7 @@ public class SmartBillClient {
 
 	Map<String, Object> params = new HashMap<>();
 	params.put("cif", cif);
-	params.put("seriesName", seriesName);
+	params.put("seriesname", seriesName);
 	params.put("number", number);
 
 	RawResponse response = Requests.get(pdfUrl).basicAuth(username, token).requestCharset(StandardCharsets.UTF_8)
