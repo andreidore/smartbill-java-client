@@ -51,7 +51,7 @@ byte[] data = client.getInvoicePdf("cif","0","1")
 
 ## Estimate
 
-### Download [estimate-download] 
+### Estimate download
 
 ```java
 byte[] data = client.getEstimatePdf("cif","0","1")
