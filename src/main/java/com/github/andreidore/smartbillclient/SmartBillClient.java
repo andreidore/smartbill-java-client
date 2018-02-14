@@ -93,6 +93,45 @@ public class SmartBillClient {
 	}
 
     }
+    
+    
+    
+    /**
+     * Download estimate (proforma invoice) PDF.
+     * 
+     * @param cif
+     * @param seriesName
+     * @param number
+     * @return
+     */
+    public byte[] getEstimatePdf(String cif, String seriesName, String number) {
+
+	String pdfUrl = url + "/SBORO/api/estimate/pdf";
+
+	Map<String, Object> headers = new HashMap<>();
+	headers.put("Accept", "application/octet-stream");
+	headers.put("Accept", "application/json");
+	headers.put("Content-Type", "application/json");
+
+	Map<String, Object> params = new HashMap<>();
+	params.put("cif", cif);
+	params.put("seriesname", seriesName);
+	params.put("number", number);
+
+	RawResponse response = Requests.get(pdfUrl).basicAuth(username, token).requestCharset(StandardCharsets.UTF_8)
+		.params(params).send();
+
+	if (response.getStatusCode() == 200) {
+
+	    return response.readToBytes();
+
+	} else {
+
+	    throw SmartBillException.createFromResponse(response);
+	}
+
+    }
+    
 
     public void sendEmail(String cif, String seriesName, String number, DocumentType type) {
 	sendEmail(cif, seriesName, number, type, null, null, null);
