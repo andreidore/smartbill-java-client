@@ -8,6 +8,8 @@ Table of Contents
   * [Client](#client)
   * [Invoice](#invoice)
      * [Download](#download) 
+  * [Estimate](#estimate)
+     * [Download](#estimate-download)   
   * [Email](#email)
   * [Configuration](#configuration)
   * [Stock](#stock)
@@ -21,7 +23,7 @@ SmartBill client is now in maven central repo.
 <dependency>
     <groupId>com.github.andreidore</groupId>
     <artifactId>smartbillclient</artifactId>
-    <version>0.4.0</version>
+    <version>0.5.0</version>
 </dependency>
 ```
 # Usage
@@ -46,6 +48,15 @@ byte[] data = client.getInvoicePdf("cif","0","1")
 
 ```
 
+
+## Estimate
+
+### Estimate-Download 
+
+```java
+byte[] data = client.getEstimatePdf("cif","0","1")
+
+```
 
 ## Email
 
@@ -83,7 +94,7 @@ List<Stock> stocks = client.getStocks("cif",new Date(),"warehouse",null,"CODE_1"
 
 * Estimate (Proforma Invoice)
   * CreateEstimate
-  * GetEstimatePdf
+  * ~~GetEstimatePdf~~
   * DeleteEstimate
   * CancelEstimate
   * RestoreEstimate
