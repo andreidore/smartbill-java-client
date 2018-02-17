@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import com.github.andreidore.smartbillclient.Warehouse.Type;
 import com.github.andreidore.smartbillclient.json.JacksonProcessor;
@@ -37,15 +38,18 @@ public class SmartBillClient {
 
     public SmartBillClient(String username, String token, String url) {
 
-	if (username == null || username.length() == 0) {
+	Objects.requireNonNull(username, "The argument username ca not be null.");
+	if (username.length() == 0) {
 	    throw new IllegalArgumentException("The argument username can not be null or empty.");
 	}
 
-	if (token == null || token.length() == 0) {
+	Objects.requireNonNull(username, "The argument token ca not be null.");
+	if (token.length() == 0) {
 	    throw new IllegalArgumentException("The argument token can not be null or empty.");
 	}
 
-	if (url == null || url.length() == 0) {
+	Objects.requireNonNull(url, "The argument url ca not be null.");
+	if (url.length() == 0) {
 	    throw new IllegalArgumentException("The argument url can not be null or empty.");
 	}
 
@@ -67,6 +71,10 @@ public class SmartBillClient {
      * @return
      */
     public byte[] getInvoicePdf(String cif, String seriesName, String number) {
+
+	Objects.requireNonNull(username, "The argument cif can not be null.");
+	Objects.requireNonNull(username, "The argument seriesName can not be null.");
+	Objects.requireNonNull(username, "The argument number can not be null.");
 
 	String pdfUrl = url + "/SBORO/api/invoice/pdf";
 
@@ -93,9 +101,7 @@ public class SmartBillClient {
 	}
 
     }
-    
-    
-    
+
     /**
      * Download estimate (proforma invoice) PDF.
      * 
@@ -105,6 +111,10 @@ public class SmartBillClient {
      * @return
      */
     public byte[] getEstimatePdf(String cif, String seriesName, String number) {
+
+	Objects.requireNonNull(username, "The argument cif can not be null.");
+	Objects.requireNonNull(username, "The argument seriesName can not be null.");
+	Objects.requireNonNull(username, "The argument number can not be null.");
 
 	String pdfUrl = url + "/SBORO/api/estimate/pdf";
 
@@ -131,14 +141,20 @@ public class SmartBillClient {
 	}
 
     }
-    
 
     public void sendEmail(String cif, String seriesName, String number, DocumentType type) {
+
 	sendEmail(cif, seriesName, number, type, null, null, null);
+
     }
 
     public void sendEmail(String cif, String seriesName, String number, DocumentType type, String to, String subject,
 	    String bodyText) {
+
+	Objects.requireNonNull(username, "The argument cif can not be null.");
+	Objects.requireNonNull(username, "The argument seriesName can not be null.");
+	Objects.requireNonNull(username, "The argument number can not be null.");
+	Objects.requireNonNull(username, "The argument type can not be null.");
 
 	String sendEmailUrl = url + "/SBORO/api/document/send";
 
@@ -188,6 +204,8 @@ public class SmartBillClient {
 
     public List<Tax> getTaxes(String cif) {
 
+	Objects.requireNonNull(username, "The argument cif can not be null.");
+
 	String taxesUrl = url + "/SBORO/api/tax";
 
 	Map<String, Object> headers = new HashMap<>();
@@ -232,6 +250,9 @@ public class SmartBillClient {
     }
 
     public List<SeriesInfo> getSeries(String cif, DocumentType type) {
+
+	Objects.requireNonNull(username, "The argument cif can not be null.");
+	Objects.requireNonNull(username, "The argument type can not be null.");
 
 	String seriesUrl = url + "/SBORO/api/series";
 
@@ -289,7 +310,6 @@ public class SmartBillClient {
     }
 
     public List<SeriesInfo> getSeries(String cif) {
-
 	return getSeries(cif, null);
     }
 
@@ -342,6 +362,10 @@ public class SmartBillClient {
      */
     public List<Stock> getStocks(String cif, Date date, String warehouseName, String productName, String productCode) {
 
+	Objects.requireNonNull(username, "The argument cif can not be null.");
+	Objects.requireNonNull(username, "The argument date can not be null.");
+	
+	
 	String stocksUrl = url + "/SBORO/api/stocks";
 
 	Map<String, Object> params = new HashMap<>();
