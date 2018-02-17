@@ -43,7 +43,7 @@ public class SmartBillClient {
 	    throw new IllegalArgumentException("The argument username can not be null or empty.");
 	}
 
-	Objects.requireNonNull(username, "The argument token ca not be null.");
+	Objects.requireNonNull(token, "The argument token ca not be null.");
 	if (token.length() == 0) {
 	    throw new IllegalArgumentException("The argument token can not be null or empty.");
 	}
@@ -72,9 +72,9 @@ public class SmartBillClient {
      */
     public byte[] getInvoicePdf(String cif, String seriesName, String number) {
 
-	Objects.requireNonNull(username, "The argument cif can not be null.");
-	Objects.requireNonNull(username, "The argument seriesName can not be null.");
-	Objects.requireNonNull(username, "The argument number can not be null.");
+	Objects.requireNonNull(cif, "The argument cif can not be null.");
+	Objects.requireNonNull(seriesName, "The argument seriesName can not be null.");
+	Objects.requireNonNull(number, "The argument number can not be null.");
 
 	String pdfUrl = url + "/SBORO/api/invoice/pdf";
 
@@ -112,9 +112,9 @@ public class SmartBillClient {
      */
     public byte[] getEstimatePdf(String cif, String seriesName, String number) {
 
-	Objects.requireNonNull(username, "The argument cif can not be null.");
-	Objects.requireNonNull(username, "The argument seriesName can not be null.");
-	Objects.requireNonNull(username, "The argument number can not be null.");
+	Objects.requireNonNull(cif, "The argument cif can not be null.");
+	Objects.requireNonNull(seriesName, "The argument seriesName can not be null.");
+	Objects.requireNonNull(number, "The argument number can not be null.");
 
 	String pdfUrl = url + "/SBORO/api/estimate/pdf";
 
@@ -151,10 +151,10 @@ public class SmartBillClient {
     public void sendEmail(String cif, String seriesName, String number, DocumentType type, String to, String subject,
 	    String bodyText) {
 
-	Objects.requireNonNull(username, "The argument cif can not be null.");
-	Objects.requireNonNull(username, "The argument seriesName can not be null.");
-	Objects.requireNonNull(username, "The argument number can not be null.");
-	Objects.requireNonNull(username, "The argument type can not be null.");
+	Objects.requireNonNull(cif, "The argument cif can not be null.");
+	Objects.requireNonNull(seriesName, "The argument seriesName can not be null.");
+	Objects.requireNonNull(number, "The argument number can not be null.");
+	Objects.requireNonNull(type, "The argument type can not be null.");
 
 	String sendEmailUrl = url + "/SBORO/api/document/send";
 
@@ -204,7 +204,7 @@ public class SmartBillClient {
 
     public List<Tax> getTaxes(String cif) {
 
-	Objects.requireNonNull(username, "The argument cif can not be null.");
+	Objects.requireNonNull(cif, "The argument cif can not be null.");
 
 	String taxesUrl = url + "/SBORO/api/tax";
 
@@ -251,8 +251,8 @@ public class SmartBillClient {
 
     public List<SeriesInfo> getSeries(String cif, DocumentType type) {
 
-	Objects.requireNonNull(username, "The argument cif can not be null.");
-	Objects.requireNonNull(username, "The argument type can not be null.");
+	Objects.requireNonNull(cif, "The argument cif can not be null.");
+	Objects.requireNonNull(type, "The argument type can not be null.");
 
 	String seriesUrl = url + "/SBORO/api/series";
 
@@ -362,8 +362,8 @@ public class SmartBillClient {
      */
     public List<Stock> getStocks(String cif, Date date, String warehouseName, String productName, String productCode) {
 
-	Objects.requireNonNull(username, "The argument cif can not be null.");
-	Objects.requireNonNull(username, "The argument date can not be null.");
+	Objects.requireNonNull(cif, "The argument cif can not be null.");
+	Objects.requireNonNull(date, "The argument date can not be null.");
 	
 	
 	String stocksUrl = url + "/SBORO/api/stocks";
