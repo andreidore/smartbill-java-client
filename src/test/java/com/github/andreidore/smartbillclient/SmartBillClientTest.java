@@ -23,6 +23,13 @@ public class SmartBillClientTest {
 	new SmartBillClient(null, "token", "http://localhost:8089");
 
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void usernameIllegalTest() {
+
+	new SmartBillClient("", "token", "http://localhost:8089");
+
+    }
 
     @Test(expected = NullPointerException.class)
     public void tokenNullTest() {
@@ -30,11 +37,26 @@ public class SmartBillClientTest {
 	new SmartBillClient("username", null, "http://localhost:8089");
 
     }
+    
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void tokenIllegalTest() {
+
+	new SmartBillClient("username", "", "http://localhost:8089");
+
+    }
 
     @Test(expected = NullPointerException.class)
     public void urlNullTest() {
 
 	new SmartBillClient("username", "token", null);
+
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void urlIllegalTest() {
+
+	new SmartBillClient("username", "token", "");
 
     }
 
