@@ -61,7 +61,7 @@ public class SmartBillClientTaxesTest {
 	SmartBillClient client = new SmartBillClient("username", "token", "http://localhost:8089");
 
 	try {
-	    List<Tax> taxes = client.getTaxes("RO123");
+	    client.getTaxes("RO123");
 	    fail("Expected exception to be thrown");
 
 	} catch (SmartBillException e) {
@@ -70,7 +70,7 @@ public class SmartBillClientTaxesTest {
 	}
 
     }
-    
+
     @Test
     public void getTaxes401Test() {
 
@@ -81,7 +81,7 @@ public class SmartBillClientTaxesTest {
 	SmartBillClient client = new SmartBillClient("username", "token", "http://localhost:8089");
 
 	try {
-	    List<Tax> taxes = client.getTaxes("RO123");
+	    client.getTaxes("RO123");
 	    fail("Expected exception to be thrown");
 
 	} catch (SmartBillException e) {
@@ -90,8 +90,7 @@ public class SmartBillClientTaxesTest {
 	}
 
     }
-    
-    
+
     @Test
     public void getTaxes500Test() {
 
@@ -102,7 +101,7 @@ public class SmartBillClientTaxesTest {
 	SmartBillClient client = new SmartBillClient("username", "token", "http://localhost:8089");
 
 	try {
-	    List<Tax> taxes = client.getTaxes("RO123");
+	    client.getTaxes("RO123");
 	    fail("Expected exception to be thrown");
 
 	} catch (SmartBillException e) {
