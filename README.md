@@ -22,8 +22,8 @@ SmartBill client is now in maven central repo.
 ```xml
 <dependency>
     <groupId>com.github.andreidore</groupId>
-    <artifactId>smartbillclient</artifactId>
-    <version>0.5.0</version>
+    <artifactId>smartbillclient4j</artifactId>
+    <version>0.7.0</version>
 </dependency>
 ```
 # Usage

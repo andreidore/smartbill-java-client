@@ -1,4 +1,4 @@
-package com.github.andreidore.smartbillclient;
+package com.github.smartbillclient4j;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,50 +13,50 @@ public class SmartBillClientTest {
     @Test
     public void createTest() {
 
-	new SmartBillClient("username", "token", "http://localhost:8089");
+        new SmartBillClient("username", "token", "http://localhost:8089");
 
     }
 
     @Test(expected = NullPointerException.class)
     public void usernameNullTest() {
 
-	new SmartBillClient(null, "token", "http://localhost:8089");
+        new SmartBillClient(null, "token", "http://localhost:8089");
 
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void usernameIllegalTest() {
 
-	new SmartBillClient("", "token", "http://localhost:8089");
+        new SmartBillClient("", "token", "http://localhost:8089");
 
     }
 
     @Test(expected = NullPointerException.class)
     public void tokenNullTest() {
 
-	new SmartBillClient("username", null, "http://localhost:8089");
+        new SmartBillClient("username", null, "http://localhost:8089");
 
     }
-    
-    
+
+
     @Test(expected = IllegalArgumentException.class)
     public void tokenIllegalTest() {
 
-	new SmartBillClient("username", "", "http://localhost:8089");
+        new SmartBillClient("username", "", "http://localhost:8089");
 
     }
 
     @Test(expected = NullPointerException.class)
     public void urlNullTest() {
 
-	new SmartBillClient("username", "token", null);
+        new SmartBillClient("username", "token", null);
 
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void urlIllegalTest() {
 
-	new SmartBillClient("username", "token", "");
+        new SmartBillClient("username", "token", "");
 
     }
 

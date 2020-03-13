@@ -1,4 +1,4 @@
-package com.github.andreidore.smartbillclient;
+package com.github.smartbillclient4j;
 
 public enum DocumentType {
 
